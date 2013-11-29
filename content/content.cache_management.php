@@ -37,9 +37,11 @@
 			
 			$fieldset->appendChild(Widget::Input('action[pur-file]', __('Remove expired file cache'), 'submit'));
 			$fieldset->appendChild(Widget::Input('action[pur-db]', __('Remove expired DB cache'), 'submit'));
+			// $fieldset->appendChild(Widget::Input('action[pur-ds]', __('Remove expired Datasource cache'), 'submit'));
 			
 			$fieldset->appendChild(Widget::Input('action[del-file]', __('Clear file cache'), 'submit'));
 			$fieldset->appendChild(Widget::Input('action[del-db]', __('Clear DB cache'), 'submit'));
+			$fieldset->appendChild(Widget::Input('action[pur-ds]', __('Clear Datasource cache'), 'submit'));
 			
 			$this->Form->appendChild($fieldset);
 			
@@ -64,11 +66,17 @@
 						case 'del-db':
 							$this->deleteDBCache();
 							break;
+						case 'del-ds':
+							$this->deleteDSCache();
+							break;
 						case 'pur-file':
 							$this->purgeFileCache();
 							break;
 						case 'pur-db':
 							$this->purgeDBCache();
+							break;
+						case 'pur-ds':
+							$this->purgeDSCache();
 							break;
 					}
 				}
@@ -101,6 +109,21 @@
 		
 		private function purgeDBCache() {
 			$count = CacheManagement::purgeDBCache();
+				
+			$this->_Result->appendChild(new XMLElement('p', __('Deleted %d expired cache entries.', array($count))));
+			$this->showResult = true;
+		}
+
+		/* Datasource cache */
+		private function deleteDSCache() {
+			$count = CacheManagement::deleteDSCache();
+			
+			$this->_Result->appendChild(new XMLElement('p', __('All %d entries in cache deleted.', array($count))));
+			$this->showResult = true;
+		}
+		
+		private function purgeDSCache() {
+			$count = CacheManagement::purgeDSCache();
 				
 			$this->_Result->appendChild(new XMLElement('p', __('Deleted %d expired cache entries.', array($count))));
 			$this->showResult = true;

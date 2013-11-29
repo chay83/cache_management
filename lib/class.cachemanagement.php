@@ -38,6 +38,27 @@
 			$cache->clean();
 			return $count - self::getCacheCount();
 		}
+
+		/** Datasource */
+		public static function deleteDSCache() {
+			return self::purgeDSCache(false);
+		}
+		
+		public static function purgeDSCache() {
+			$count = 0;
+			$files = General::listStructure(CACHE . '/cacheabledatasource/', null, false);
+		
+			if (!empty($files)) {
+				foreach ($files['filelist'] as $file) {
+					if (!$expiredOnly || filemtime($file) < time() - (60 * 60)) {
+						if (General::deleteFile($file, true)) {
+							$count++;
+						}
+					}
+				}
+			}
+			return $count;
+		}
 		
 		private static function getCacheCount() {
 			return Symphony::Database()->fetchVar('c', 0, 'SELECT count(id) FROM tbl_cache');
