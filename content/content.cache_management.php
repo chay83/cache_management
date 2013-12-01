@@ -35,12 +35,15 @@
 			$fieldset->appendChild(new XMLElement('legend',__('Please choose what to delete')));
 			$fieldset->appendChild(new XMLElement('p',__('Removing will delete expired entries. Clearing will delete everything.', array('class' => 'help'))));
 			
-			$fieldset->appendChild(Widget::Input('action[pur-file]', __('Remove expired file cache'), 'submit'));
-			$fieldset->appendChild(Widget::Input('action[pur-db]', __('Remove expired DB cache'), 'submit'));
+
+			if(Administration::instance()->Author->isDeveloper()){
+				$fieldset->appendChild(Widget::Input('action[pur-file]', __('Remove expired file cache'), 'submit'));
+				$fieldset->appendChild(Widget::Input('action[pur-db]', __('Remove expired DB cache'), 'submit'));
+				$fieldset->appendChild(Widget::Input('action[del-db]', __('Clear DB cache'), 'submit'));			
+			}
+
+			$fieldset->appendChild(Widget::Input('action[del-file]', __('Clear Image cache'), 'submit'));
 			// $fieldset->appendChild(Widget::Input('action[pur-ds]', __('Remove expired Datasource cache'), 'submit'));
-			
-			$fieldset->appendChild(Widget::Input('action[del-file]', __('Clear file cache'), 'submit'));
-			$fieldset->appendChild(Widget::Input('action[del-db]', __('Clear DB cache'), 'submit'));
 			$fieldset->appendChild(Widget::Input('action[pur-ds]', __('Clear Datasource cache'), 'submit'));
 			
 			$this->Form->appendChild($fieldset);

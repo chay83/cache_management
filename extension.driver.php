@@ -26,6 +26,7 @@
 		 */
 		public function fetchNavigation() {
 			$group = Administration::instance()->Author->isDeveloper() ? 'developer' : 'author';
+
 			
 			return array(
 					array (
