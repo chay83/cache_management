@@ -25,11 +25,11 @@
 		 * Delegate fired to add a link to Cache Management
 		 */
 		public function fetchNavigation() {
-			$group = Administration::instance()->Author->isDeveloper() ? 'developer' : 'manager';
+			$group = Administration::instance()->Author->isDeveloper() ? 'developer' : 'author';
 			
 			return array(
 					array (
-						'location' => __('System'),
+						'location' => __('Site Management'),
 						'name' => __(self::EXT_NAME),
 						'link' => 'cache_management',
 						'limit' => $group,
